@@ -26,6 +26,9 @@ class App extends Component {
   fetchGeocode() {
     return geocode(this.state.input)
   }
+  fetchWeather() {
+    return getWeather(this.state.lat, this.state.lng)
+  }
 
   handleInputChange = async e => {
     try {
@@ -39,10 +42,8 @@ class App extends Component {
     }
   }
   render() {
-    const forecast = getWeather(this.state.lat, this.state.lng)
-
-    forecast.then(data => {
-      console.log(data)
+    let forecast = this.fetchWeather().then(response => {
+      console.log(response)
     })
 
     return (
