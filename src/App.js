@@ -26,23 +26,34 @@ class App extends Component {
   fetchGeocode() {
     return geocode(this.state.input)
   }
+
   handleInputChange = async e => {
     try {
       this.setState({ input: e.currentTarget.value })
       let result = await this.fetchGeocode()
-      console.log(result)
-      this.setState({ lat: result.lat, lng: result.lng })
+      if (result) {
+        this.setState({ lat: result.lat, lng: result.lng })
+      }
     } catch (err) {
       this.setState({ error: err })
     }
   }
   render() {
-    const forecast = null
+    const forecast = getWeather(this.state.lat, this.state.lng)
+
+    forecast.then(data => {
+      console.log(data)
+    })
+
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <Input style={{ width: 200 }} onChange={this.handleInputChange} />
+          <Input
+            type="text"
+            style={{ width: 200 }}
+            onChange={this.handleInputChange}
+          />
           <WeatherForecast forecast={forecast} />
         </header>
       </div>
