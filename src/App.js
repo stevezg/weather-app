@@ -43,7 +43,7 @@ class App extends Component {
   }
   render() {
     let forecast = this.fetchWeather().then(response => {
-      console.log(response)
+      return response
     })
 
     return (
